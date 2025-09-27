@@ -1,25 +1,16 @@
-FROM golang:1.19-alpine
+FROM golang:1.25 AS build
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
-
-COPY *.go ./
-COPY .env .env
+COPY . .
 
 RUN go mod download
-RUN go get github.com/sirupsen/logrus
-RUN go get github.com/prometheus/client_golang/prometheus
-RUN go get github.com/prometheus/client_golang/prometheus/promhttp
-RUN go get github.com/prometheus/common/version
+RUN go build -o /bambulabs-exporter ./...
 
-RUN go mod vendor
-RUN go mod tidy
-RUN go mod vendor
+FROM debian:bookworm-slim
 
-RUN go build -o /bambulabs-aetrius-exporter
+COPY --from=build /bambulabs-exporter /bambulabs-exporter
 
 EXPOSE 9101
 
-CMD [ "/bambulabs-aetrius-exporter" ]
+CMD [ "/bambulabs-exporter" ]
