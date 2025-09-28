@@ -50,9 +50,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ env.REPOSITORY_LC }}
-          tags:
+          tags: |
             type=semver,pattern={{version}},value=${{steps.semantic.outputs.new_release_version}},enabled=${{ steps.semantic.outputs.new_release_published == 'true' }}
             type=semver,pattern={{major}}.{{minor}},value=${{steps.semantic.outputs.new_release_version}},enabled=${{ steps.semantic.outputs.new_release_published == 'true' }}
+            type=semver,pattern={{major}},value=${{steps.semantic.outputs.new_release_version}},enabled=${{ steps.semantic.outputs.new_release_published == 'true' }}
             type=sha
 
       - name: Build and push docker image
