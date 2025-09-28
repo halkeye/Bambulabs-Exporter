@@ -24,7 +24,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 11,
+    "id": 54,
     "links": [],
     "panels": [
         {
@@ -43,10 +43,13 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
+                    "color": {
+                        "mode": "thresholds"
+                    },
                     "mappings": [
                         {
                             "options": {
@@ -68,7 +71,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "transparent"
+                                "color": "transparent",
+                                "value": 0
                             },
                             {
                                 "color": "red",
@@ -91,7 +95,11 @@
             },
             "id": 27,
             "options": {
+                "colorMode": "value",
+                "graphMode": "area",
+                "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
@@ -99,10 +107,11 @@
                     "fields": "",
                     "values": false
                 },
-                "showThresholdLabels": false,
-                "showThresholdMarkers": true
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "9.4.1",
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -110,29 +119,33 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "up{job=\"bambulabs-exporter\"}",
+                    "exemplar": false,
+                    "expr": "sum(up{job=\"$job\"})",
                     "hide": false,
+                    "instant": true,
                     "legendFormat": "__auto",
-                    "range": true,
+                    "range": false,
                     "refId": "A"
                 }
             ],
             "title": "Up",
-            "type": "gauge"
+            "type": "stat"
         },
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
                     "mappings": [],
+                    "max": 100,
                     "thresholds": {
                         "mode": "percentage",
                         "steps": [
                             {
-                                "color": "red"
+                                "color": "red",
+                                "value": 0
                             },
                             {
                                 "color": "#EAB839",
@@ -143,7 +156,8 @@
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "percent"
                 },
                 "overrides": []
             },
@@ -155,18 +169,22 @@
             },
             "id": 14,
             "options": {
+                "minVizHeight": 75,
+                "minVizWidth": 75,
                 "orientation": "auto",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
                     ],
                     "fields": "",
+                    "limit": 1,
                     "values": false
                 },
                 "showThresholdLabels": false,
-                "showThresholdMarkers": true
+                "showThresholdMarkers": true,
+                "sizing": "auto"
             },
-            "pluginVersion": "9.4.1",
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -174,7 +192,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "mc_percent",
+                    "expr": "sum(mc_percent{job=\"$job\"})",
                     "legendFormat": "__auto",
                     "range": true,
                     "refId": "A"
@@ -186,16 +204,18 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
+                    "fieldMinMax": false,
                     "mappings": [],
                     "thresholds": {
                         "mode": "percentage",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "orange",
@@ -206,7 +226,8 @@
                                 "value": 85
                             }
                         ]
-                    }
+                    },
+                    "unit": "celsius"
                 },
                 "overrides": []
             },
@@ -218,18 +239,22 @@
             },
             "id": 21,
             "options": {
+                "minVizHeight": 75,
+                "minVizWidth": 75,
                 "orientation": "auto",
                 "reduceOptions": {
                     "calcs": [
-                        "lastNotNull"
+                        "last"
                     ],
                     "fields": "",
+                    "limit": 1,
                     "values": false
                 },
                 "showThresholdLabels": false,
-                "showThresholdMarkers": true
+                "showThresholdMarkers": true,
+                "sizing": "auto"
             },
-            "pluginVersion": "9.4.1",
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -237,7 +262,9 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(nozzle_temper * 9/5) + 32",
+                    "exemplar": false,
+                    "expr": "sum(nozzle_temper{job=\"$job\"})",
+                    "instant": false,
                     "legendFormat": "Nozzle Temperature",
                     "range": true,
                     "refId": "A"
@@ -248,7 +275,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(nozzle_target_temper * 9/5) + 32",
+                    "expr": "sum(nozzle_target_temper{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Nozzle Target Temperature",
                     "range": true,
@@ -261,7 +288,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -270,7 +297,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
@@ -278,7 +306,7 @@
                             }
                         ]
                     },
-                    "unit": "short"
+                    "unit": "dBm"
                 },
                 "overrides": []
             },
@@ -291,19 +319,23 @@
             "id": 22,
             "options": {
                 "colorMode": "value",
-                "graphMode": "area",
+                "graphMode": "none",
                 "justifyMode": "auto",
                 "orientation": "auto",
+                "percentChangeColorMode": "standard",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
                     ],
                     "fields": "",
+                    "limit": 1,
                     "values": false
                 },
-                "textMode": "auto"
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
             },
-            "pluginVersion": "9.4.1",
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -311,7 +343,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "wifi_signal ",
+                    "expr": "sum(wifi_signal{job=\"$job\"})",
                     "legendFormat": "__auto",
                     "range": true,
                     "refId": "A"
@@ -323,7 +355,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -332,10 +364,12 @@
                         "mode": "percentage",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             }
                         ]
-                    }
+                    },
+                    "unit": "celsius"
                 },
                 "overrides": []
             },
@@ -347,18 +381,22 @@
             },
             "id": 28,
             "options": {
+                "minVizHeight": 75,
+                "minVizWidth": 75,
                 "orientation": "auto",
                 "reduceOptions": {
                     "calcs": [
                         "lastNotNull"
                     ],
                     "fields": "",
+                    "limit": 1,
                     "values": false
                 },
                 "showThresholdLabels": false,
-                "showThresholdMarkers": true
+                "showThresholdMarkers": true,
+                "sizing": "auto"
             },
-            "pluginVersion": "9.4.1",
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -366,25 +404,15 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(ams_temp * 9/5) + 32",
-                    "legendFormat": "AMS",
-                    "range": true,
+                    "exemplar": false,
+                    "expr": "abs(sum(ams_temp{job=\"$job\"}))",
+                    "instant": true,
+                    "legendFormat": "AMS {{ ams_number }}",
+                    "range": false,
                     "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
-                    "editorMode": "code",
-                    "expr": "(chamber_temper * 9/5) + 32",
-                    "hide": false,
-                    "legendFormat": "Chamber",
-                    "range": true,
-                    "refId": "B"
                 }
             ],
-            "title": "AMS, Bed, & Chamber Temp (F)",
+            "title": "AMS Temp",
             "type": "gauge"
         },
         {
@@ -403,7 +431,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -411,11 +439,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -424,6 +454,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -445,7 +476,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
@@ -471,10 +503,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -482,8 +516,8 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "up{job=\"bambulabs-exporter\"}",
-                    "legendFormat": "__auto",
+                    "expr": "sum(up{job=\"bambulabs-exporter\"})",
+                    "legendFormat": "UP",
                     "range": true,
                     "refId": "A"
                 }
@@ -494,7 +528,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -502,11 +536,13 @@
                         "mode": "continuous-GrYlRd"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 20,
                         "gradientMode": "scheme",
@@ -515,6 +551,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "smooth",
                         "lineWidth": 3,
                         "pointSize": 5,
@@ -536,7 +573,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
@@ -562,10 +600,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -573,7 +613,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "mc_remaining_time",
+                    "expr": "sum(mc_remaining_time{job=\"$job\"})",
                     "legendFormat": "Print Job Timer",
                     "range": true,
                     "refId": "A"
@@ -585,7 +625,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -593,11 +633,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -606,6 +648,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -627,14 +670,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "celsius"
                 },
                 "overrides": []
             },
@@ -653,10 +698,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -664,7 +711,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(ams_temp * 9/5) + 32",
+                    "expr": "abs(sum(ams_temp{job=\"$job\"}))",
                     "legendFormat": "AMS Temperature",
                     "range": true,
                     "refId": "A"
@@ -675,20 +722,20 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(chamber_temper * 9/5) + 32",
+                    "expr": "abs(sum(chamber_temper{job=\"$job\"}))",
                     "hide": false,
                     "legendFormat": "Chamber Temperature",
                     "range": true,
                     "refId": "B"
                 }
             ],
-            "title": "AMS, Bed, & Chamber Temp (F)",
+            "title": "AMS, Bed, & Chamber Temp",
             "type": "timeseries"
         },
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -696,11 +743,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -709,6 +758,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -730,14 +780,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "dBm"
                 },
                 "overrides": []
             },
@@ -756,10 +808,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -767,19 +821,19 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "wifi_signal ",
+                    "expr": "sum(wifi_signal{job=\"$job\"})",
                     "legendFormat": "WiFi Signal",
                     "range": true,
                     "refId": "A"
                 }
             ],
-            "title": "WiFi SIgnal in dBm",
+            "title": "WiFi SIgnal",
             "type": "timeseries"
         },
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -787,11 +841,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -800,6 +856,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -821,7 +878,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
@@ -847,10 +905,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -858,7 +918,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "print_error ",
+                    "expr": "sum(print_error{job=\"$job\"})",
                     "legendFormat": "Print Error",
                     "range": true,
                     "refId": "A"
@@ -869,7 +929,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "fail_reason",
+                    "expr": "sum(fail_reason{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Failure Reason",
                     "range": true,
@@ -881,7 +941,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "mc_print_error_code",
+                    "expr": "sum(mc_print_error_code{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Print Error Code",
                     "range": true,
@@ -894,7 +954,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -902,11 +962,13 @@
                         "mode": "continuous-GrYlRd"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 20,
                         "gradientMode": "scheme",
@@ -915,6 +977,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "smooth",
                         "lineWidth": 3,
                         "pointSize": 5,
@@ -936,14 +999,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "celsius"
                 },
                 "overrides": []
             },
@@ -962,10 +1027,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -973,7 +1040,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(nozzle_temper * 9/5) + 32",
+                    "expr": "sum(nozzle_temper{job=\"$job\"})",
                     "legendFormat": "Nozzle Temperature",
                     "range": true,
                     "refId": "A"
@@ -984,20 +1051,20 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "(nozzle_target_temper * 9/5) + 32",
+                    "expr": "sum(nozzle_target_temper{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Nozzle Target Temperature",
                     "range": true,
                     "refId": "B"
                 }
             ],
-            "title": "Nozzle Temperature (F) ",
+            "title": "Nozzle Temperature",
             "type": "timeseries"
         },
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -1005,11 +1072,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -1018,6 +1087,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -1039,14 +1109,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "rotrpm"
                 },
                 "overrides": []
             },
@@ -1065,10 +1137,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -1076,7 +1150,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "fan_gear",
+                    "expr": "sum(fan_gear{job=\"$job\"})",
                     "legendFormat": "Fan Gear",
                     "range": true,
                     "refId": "A"
@@ -1088,7 +1162,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -1096,11 +1170,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -1109,6 +1185,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -1130,14 +1207,16 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "rotrpm"
                 },
                 "overrides": []
             },
@@ -1156,10 +1235,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -1167,7 +1248,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "big_fan1_speed ",
+                    "expr": "sum(big_fan1_speed{job=\"$job\"})",
                     "legendFormat": "Big Fan 1",
                     "range": true,
                     "refId": "A"
@@ -1178,7 +1259,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "cooling_fan_speed ",
+                    "expr": "sum(cooling_fan_speed{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Cooling Fan",
                     "range": true,
@@ -1190,7 +1271,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "big_fan2_speed ",
+                    "expr": "sum(big_fan2_speed{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Big Fan 2",
                     "range": true,
@@ -1203,7 +1284,7 @@
         {
             "datasource": {
                 "type": "prometheus",
-                "uid": "PBFA97CFB590B2093"
+                "uid": "prometheus"
             },
             "fieldConfig": {
                 "defaults": {
@@ -1211,11 +1292,13 @@
                         "mode": "palette-classic"
                     },
                     "custom": {
+                        "axisBorderShow": false,
                         "axisCenteredZero": false,
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "barAlignment": 0,
+                        "barWidthFactor": 0.6,
                         "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
@@ -1224,6 +1307,7 @@
                             "tooltip": false,
                             "viz": false
                         },
+                        "insertNulls": false,
                         "lineInterpolation": "linear",
                         "lineWidth": 1,
                         "pointSize": 5,
@@ -1245,7 +1329,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": 0
                             },
                             {
                                 "color": "red",
@@ -1271,10 +1356,12 @@
                     "showLegend": true
                 },
                 "tooltip": {
+                    "hideZeros": false,
                     "mode": "single",
                     "sort": "none"
                 }
             },
+            "pluginVersion": "12.1.1",
             "targets": [
                 {
                     "datasource": {
@@ -1282,7 +1369,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "mc_print_sub_stage",
+                    "expr": "sum(mc_print_sub_stage{job=\"$job\"})",
                     "legendFormat": "Print Sub Stage",
                     "range": true,
                     "refId": "A"
@@ -1293,7 +1380,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "mc_print_stage",
+                    "expr": "sum(mc_print_stage{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Print Stage",
                     "range": true,
@@ -1309,7 +1396,28 @@
     "schemaVersion": 41,
     "tags": [],
     "templating": {
-        "list": []
+        "list": [
+            {
+                "allowCustomValue": false,
+                "current": {
+                    "text": "bambulabs-exporter",
+                    "value": "bambulabs-exporter"
+                },
+                "definition": "label_values(up,job)",
+                "description": "",
+                "label": "Job",
+                "name": "job",
+                "options": [],
+                "query": {
+                    "qryType": 1,
+                    "query": "label_values(up,job)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
+                },
+                "refresh": 1,
+                "regex": "/.*bambulabs.*/",
+                "type": "query"
+            }
+        ]
     },
     "time": {
         "from": "now-12h",
@@ -1317,7 +1425,7 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "bambulabs-exporter",
+    "title": "bambulabs-exporter2",
     "uid": "30Dv92b4k",
     "version": 1
 }
