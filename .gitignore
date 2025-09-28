@@ -3,3 +3,5 @@ vendor/
 .env
 .env-local
 .env-empty
+# Added by goreleaser init:
+dist/

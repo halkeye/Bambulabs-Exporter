@@ -42,9 +42,10 @@ jobs:
       - name: Release
         uses: cycjimmy/semantic-release-action@v5
         id: semantic
-        env:
+        with:
           extra_plugins: |
             @semantic-release/exec
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to GitHub Container Registry
