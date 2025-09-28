@@ -142,11 +142,6 @@ var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 		return
 	}
 
-	if data.Print.WifiSignal == "" {
-		fmt.Print(data.Print)
-		fmt.Printf("Wifi Signal was empty\n")
-	}
-
 	layerNumberMetric.Set(float64(data.Print.LayerNum))
 	printErrorMetric.Set(float64(data.Print.PrintError))
 
