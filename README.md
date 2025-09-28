@@ -17,10 +17,56 @@ services:
     environment:
       - BAMBULABS_IP='192.168.1.2'
       - BAMBULABS_TOPIC='device/<serialnumber>/report'
-      - BAMBULABS_PASSWORD='<password<password>
+      - BAMBULABS_PASSWORD='<password>
       - BAMBULABS_USERNAME='bblp'
     ports:
       - 9101:9101
+```
+
+### Kubernetes
+
+I recommend the [app-template](https://bjw-s-labs.github.io/helm-charts/docs/app-template/) helm chart to deploy this
+
+```yaml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/library/common/values.schema.json
+controllers:
+  main:
+    annotations:
+      reloader.stakater.com/auto: "true"
+    containers:
+      main:
+        image:
+          repository: "ghcr.io/halkeye/bambulabs-exporter"
+          tag: "1.0"
+        env:
+          BAMBULABS_IP: "192.168.1.2"
+          BAMBULABS_TOPIC: "device/<serialnumber>/report"
+          BAMBULABS_PASSWORD: "<password>
+          BAMBULABS_USERNAME: "bblp"
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+        resources:
+          requests:
+            cpu: 10m
+            memory: 100Mi
+          limits:
+            memory: 100Mi
+service:
+  main:
+    controller: main
+    ports:
+      http:
+        port: 9101
+serviceMonitor:
+  main:
+    enabled: true
+    endpoints:
+      - port: http
+        scheme: http
+        path: /metrics
 ```
 
 ### Binary
