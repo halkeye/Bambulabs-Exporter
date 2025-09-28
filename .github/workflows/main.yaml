@@ -32,10 +32,19 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          install-only: true
+          distribution: goreleaser
+          version: "latest"
+
       - name: Release
         uses: cycjimmy/semantic-release-action@v5
         id: semantic
         env:
+          extra_plugins: |
+            @semantic-release/exec
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Login to GitHub Container Registry
