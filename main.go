@@ -142,6 +142,11 @@ var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 		return
 	}
 
+	if data.Print.Command != "push_status" {
+		fmt.Printf("Ignoring command: %s\n", data.Print.Command)
+		return
+	}
+
 	layerNumberMetric.Set(float64(data.Print.LayerNum))
 	printErrorMetric.Set(float64(data.Print.PrintError))
 
