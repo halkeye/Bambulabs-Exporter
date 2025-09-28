@@ -24,11 +24,11 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 2,
+    "id": 11,
     "links": [],
-    "liveNow": false,
     "panels": [
         {
+            "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -36,6 +36,7 @@
                 "y": 0
             },
             "id": 26,
+            "panels": [],
             "title": "Instant Statuses",
             "type": "row"
         },
@@ -67,8 +68,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "transparent",
-                                "value": null
+                                "color": "transparent"
                             },
                             {
                                 "color": "red",
@@ -110,7 +110,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "up{job=\"BambuLabs\"}",
+                    "expr": "up{job=\"bambulabs-exporter\"}",
                     "hide": false,
                     "legendFormat": "__auto",
                     "range": true,
@@ -132,8 +132,7 @@
                         "mode": "percentage",
                         "steps": [
                             {
-                                "color": "red",
-                                "value": null
+                                "color": "red"
                             },
                             {
                                 "color": "#EAB839",
@@ -196,8 +195,7 @@
                         "mode": "percentage",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "orange",
@@ -272,8 +270,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -335,8 +332,7 @@
                         "mode": "percentage",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             }
                         ]
                     }
@@ -392,6 +388,7 @@
             "type": "gauge"
         },
         {
+            "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -399,6 +396,7 @@
                 "y": 5
             },
             "id": 24,
+            "panels": [],
             "title": "Trending Metrics",
             "type": "row"
         },
@@ -447,8 +445,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -485,7 +482,7 @@
                         "uid": "PBFA97CFB590B2093"
                     },
                     "editorMode": "code",
-                    "expr": "up{job=\"BambuLabs\"}",
+                    "expr": "up{job=\"bambulabs-exporter\"}",
                     "legendFormat": "__auto",
                     "range": true,
                     "refId": "A"
@@ -539,8 +536,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -631,8 +627,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -735,8 +730,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -827,8 +821,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -943,8 +936,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1047,8 +1039,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1139,8 +1130,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1255,8 +1245,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -1315,10 +1304,9 @@
             "type": "timeseries"
         }
     ],
+    "preload": false,
     "refresh": "5s",
-    "revision": 1,
-    "schemaVersion": 38,
-    "style": "dark",
+    "schemaVersion": 41,
     "tags": [],
     "templating": {
         "list": []
@@ -1329,8 +1317,7 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "BambuLabs",
+    "title": "bambulabs-exporter",
     "uid": "30Dv92b4k",
-    "version": 6,
-    "weekStart": ""
+    "version": 1
 }
