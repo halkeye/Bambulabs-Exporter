@@ -24,7 +24,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 54,
+    "id": 6,
     "links": [],
     "panels": [
         {
@@ -581,7 +581,8 @@
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "m"
                 },
                 "overrides": []
             },
@@ -619,7 +620,7 @@
                     "refId": "A"
                 }
             ],
-            "title": "Remaining Time on Print (minutes)",
+            "title": "Remaining Time on Print",
             "type": "timeseries"
         },
         {
@@ -1425,7 +1426,7 @@
     },
     "timepicker": {},
     "timezone": "",
-    "title": "bambulabs-exporter2",
+    "title": "bambulabs-exporter",
     "uid": "30Dv92b4k",
     "version": 1
 }
