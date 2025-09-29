@@ -24,7 +24,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 6,
+    "id": 10,
     "links": [],
     "panels": [
         {
@@ -116,11 +116,11 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "sum(up{job=\"$job\"})",
+                    "expr": "max(up{job=\"$job\"})",
                     "hide": false,
                     "instant": true,
                     "legendFormat": "__auto",
@@ -129,6 +129,75 @@
                 }
             ],
             "title": "Up",
+            "type": "stat"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "continuous-GrYlRd"
+                    },
+                    "mappings": [],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": 0
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    },
+                    "unit": "m"
+                },
+                "overrides": []
+            },
+            "gridPos": {
+                "h": 4,
+                "w": 3,
+                "x": 4,
+                "y": 1
+            },
+            "id": 29,
+            "options": {
+                "colorMode": "value",
+                "graphMode": "none",
+                "justifyMode": "auto",
+                "orientation": "auto",
+                "percentChangeColorMode": "standard",
+                "reduceOptions": {
+                    "calcs": [
+                        "lastNotNull"
+                    ],
+                    "fields": "",
+                    "values": false
+                },
+                "showPercentChange": false,
+                "textMode": "auto",
+                "wideLayout": true
+            },
+            "pluginVersion": "12.1.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "${DS_PROMETHEUS}"
+                    },
+                    "editorMode": "code",
+                    "expr": "max(mc_remaining_time{job=\"$job\"})",
+                    "legendFormat": "Print Job Timer",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Remaining Time on Print",
             "type": "stat"
         },
         {
@@ -164,7 +233,7 @@
             "gridPos": {
                 "h": 4,
                 "w": 3,
-                "x": 4,
+                "x": 7,
                 "y": 1
             },
             "id": 14,
@@ -189,10 +258,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(mc_percent{job=\"$job\"})",
+                    "expr": "max(mc_percent{job=\"$job\"})",
                     "legendFormat": "__auto",
                     "range": true,
                     "refId": "A"
@@ -234,7 +303,7 @@
             "gridPos": {
                 "h": 4,
                 "w": 5,
-                "x": 7,
+                "x": 10,
                 "y": 1
             },
             "id": 21,
@@ -259,11 +328,11 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "sum(nozzle_temper{job=\"$job\"})",
+                    "expr": "max(nozzle_temper{job=\"$job\"})",
                     "instant": false,
                     "legendFormat": "Nozzle Temperature",
                     "range": true,
@@ -272,10 +341,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(nozzle_target_temper{job=\"$job\"})",
+                    "expr": "max(nozzle_target_temper{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Nozzle Target Temperature",
                     "range": true,
@@ -284,73 +353,6 @@
             ],
             "title": "Nozzle Temperature (F) ",
             "type": "gauge"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "mappings": [],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": 0
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    },
-                    "unit": "dBm"
-                },
-                "overrides": []
-            },
-            "gridPos": {
-                "h": 4,
-                "w": 3,
-                "x": 12,
-                "y": 1
-            },
-            "id": 22,
-            "options": {
-                "colorMode": "value",
-                "graphMode": "none",
-                "justifyMode": "auto",
-                "orientation": "auto",
-                "percentChangeColorMode": "standard",
-                "reduceOptions": {
-                    "calcs": [
-                        "lastNotNull"
-                    ],
-                    "fields": "",
-                    "limit": 1,
-                    "values": false
-                },
-                "showPercentChange": false,
-                "textMode": "auto",
-                "wideLayout": true
-            },
-            "pluginVersion": "12.1.1",
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
-                    },
-                    "editorMode": "code",
-                    "expr": "sum(wifi_signal{job=\"$job\"})",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "WiFi SIgnal in dBm",
-            "type": "stat"
         },
         {
             "datasource": {
@@ -401,11 +403,11 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
                     "exemplar": false,
-                    "expr": "abs(sum(ams_temp{job=\"$job\"}))",
+                    "expr": "abs(max(ams_temp{job=\"$job\"}))",
                     "instant": true,
                     "legendFormat": "AMS {{ ams_number }}",
                     "range": false,
@@ -513,10 +515,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(up{job=\"bambulabs-exporter\"})",
+                    "expr": "max(up{job=\"bambulabs-exporter\"})",
                     "legendFormat": "UP",
                     "range": true,
                     "refId": "A"
@@ -611,10 +613,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(mc_remaining_time{job=\"$job\"})",
+                    "expr": "max(mc_remaining_time{job=\"$job\"})",
                     "legendFormat": "Print Job Timer",
                     "range": true,
                     "refId": "A"
@@ -709,10 +711,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "abs(sum(ams_temp{job=\"$job\"}))",
+                    "expr": "abs(max(ams_temp{job=\"$job\"}))",
                     "legendFormat": "AMS Temperature",
                     "range": true,
                     "refId": "A"
@@ -720,10 +722,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "abs(sum(chamber_temper{job=\"$job\"}))",
+                    "expr": "abs(max(chamber_temper{job=\"$job\"}))",
                     "hide": false,
                     "legendFormat": "Chamber Temperature",
                     "range": true,
@@ -819,10 +821,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(wifi_signal{job=\"$job\"})",
+                    "expr": "max(wifi_signal{job=\"$job\"})",
                     "legendFormat": "WiFi Signal",
                     "range": true,
                     "refId": "A"
@@ -916,10 +918,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(print_error{job=\"$job\"})",
+                    "expr": "max(print_error{job=\"$job\"})",
                     "legendFormat": "Print Error",
                     "range": true,
                     "refId": "A"
@@ -927,10 +929,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(fail_reason{job=\"$job\"})",
+                    "expr": "max(fail_reason{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Failure Reason",
                     "range": true,
@@ -939,10 +941,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(mc_print_error_code{job=\"$job\"})",
+                    "expr": "max(mc_print_error_code{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Print Error Code",
                     "range": true,
@@ -1038,10 +1040,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(nozzle_temper{job=\"$job\"})",
+                    "expr": "max(nozzle_temper{job=\"$job\"})",
                     "legendFormat": "Nozzle Temperature",
                     "range": true,
                     "refId": "A"
@@ -1049,10 +1051,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(nozzle_target_temper{job=\"$job\"})",
+                    "expr": "max(nozzle_target_temper{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Nozzle Target Temperature",
                     "range": true,
@@ -1148,10 +1150,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(fan_gear{job=\"$job\"})",
+                    "expr": "max(fan_gear{job=\"$job\"})",
                     "legendFormat": "Fan Gear",
                     "range": true,
                     "refId": "A"
@@ -1246,10 +1248,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(big_fan1_speed{job=\"$job\"})",
+                    "expr": "max(big_fan1_speed{job=\"$job\"})",
                     "legendFormat": "Big Fan 1",
                     "range": true,
                     "refId": "A"
@@ -1257,10 +1259,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(cooling_fan_speed{job=\"$job\"})",
+                    "expr": "max(cooling_fan_speed{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Cooling Fan",
                     "range": true,
@@ -1269,10 +1271,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(big_fan2_speed{job=\"$job\"})",
+                    "expr": "max(big_fan2_speed{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Big Fan 2",
                     "range": true,
@@ -1367,10 +1369,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(mc_print_sub_stage{job=\"$job\"})",
+                    "expr": "max(mc_print_sub_stage{job=\"$job\"})",
                     "legendFormat": "Print Sub Stage",
                     "range": true,
                     "refId": "A"
@@ -1378,10 +1380,10 @@
                 {
                     "datasource": {
                         "type": "prometheus",
-                        "uid": "PBFA97CFB590B2093"
+                        "uid": "${DS_PROMETHEUS}"
                     },
                     "editorMode": "code",
-                    "expr": "sum(mc_print_stage{job=\"$job\"})",
+                    "expr": "max(mc_print_stage{job=\"$job\"})",
                     "hide": false,
                     "legendFormat": "Print Stage",
                     "range": true,
