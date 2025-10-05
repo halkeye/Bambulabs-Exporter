@@ -1,6 +1,7 @@
 package main
 
 import (
+	"cmp"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
@@ -111,11 +112,8 @@ var (
 )
 
 func connectToBroker(cfg Config) {
-	clientID := os.Getenv("HOSTNAME")
-	if !strings.Contains(clientID, "bambulabs") {
-		clientID = "bambulabs-" + clientID
-	}
-	var port = 8883
+	port := 8883
+	clientID := cmp.Or(os.Getenv("OVERRIDE_CLIENT_ID"), "bambulabs-prometheus-exporter")
 
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("ssl://%s:%d", cfg.IP, port))
