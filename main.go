@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -110,26 +111,28 @@ var (
 )
 
 func connectToBroker(cfg Config) {
-	//var broker = broker
+	clientID := os.Getenv("HOSTNAME")
+	if !strings.Contains(clientID, "bambulabs") {
+		clientID = "bambulabs-" + clientID
+	}
 	var port = 8883
+
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(fmt.Sprintf("ssl://%s:%d", cfg.IP, port))
-	opts.SetClientID("bambuulabs-prometheus-exporter")
+	opts.SetClientID(clientID)
 	opts.SetUsername(cfg.Username)
 	opts.SetPassword(cfg.Password)
 	opts.SetDefaultPublishHandler(messagePubHandler)
-	opts.OnConnect = connectHandler
-	opts.OnConnectionLost = connectLostHandler
+	opts.SetAutoReconnect(true)
+	opts.OnConnect = buildConnectHandler(cfg)
+	opts.OnConnectionLost = buildConnectLostHandler(cfg)
 
 	opts.SetTLSConfig(newTLSConfig())
 	client := mqtt.NewClient(opts)
 	token := client.Connect()
-	defer token.Done()
 	if token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
-
-	client.Subscribe(cfg.Topic, 1, nil).Wait()
 }
 
 var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
@@ -202,13 +205,18 @@ var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 	}
 }
 
-var connectHandler mqtt.OnConnectHandler = func(client mqtt.Client) {
-	dt := time.Now()
-	fmt.Printf("Connected: %s\n", dt.String())
+func buildConnectHandler(cfg Config) mqtt.OnConnectHandler {
+	return func(client mqtt.Client) {
+		dt := time.Now()
+		fmt.Printf("Connected: %s\n", dt.String())
+		client.Subscribe(cfg.Topic, 1, nil).Wait()
+	}
 }
 
-var connectLostHandler mqtt.ConnectionLostHandler = func(client mqtt.Client, err error) {
-	fmt.Printf("Connect lost: %+v\n", err)
+func buildConnectLostHandler(cfg Config) mqtt.ConnectionLostHandler {
+	return func(client mqtt.Client, err error) {
+		fmt.Printf("Connect lost: %+v\n", err)
+	}
 }
 
 func main() {
