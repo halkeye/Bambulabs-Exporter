@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 RUN go mod download
-RUN go build -o /bambulabs-exporter ./...
+RUN go build -o /bambulabs-exporter .
 
 FROM debian:bookworm-slim
 
