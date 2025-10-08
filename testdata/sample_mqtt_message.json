@@ -1,0 +1,54 @@
+{
+  "print": {
+    "command": "push_status",
+    "layer_num": 15,
+    "print_error": 0,
+    "wifi_signal": "-42dBm",
+    "big_fan1_speed": "200",
+    "big_fan2_speed": "300",
+    "chamber_temper": 28.5,
+    "cooling_fan_speed": "180",
+    "fail_reason": "0",
+    "fan_gear": 4,
+    "mc_percent": 75,
+    "mc_print_error_code": "0",
+    "mc_print_stage": "3",
+    "mc_print_sub_stage": 3,
+    "mc_remaining_time": 45,
+    "nozzle_temper": 250.0,
+    "nozzle_target_temper": 260.0,
+    "ams": {
+      "ams": [
+        {
+          "id": "0",
+          "humidity": "55.3",
+          "temp": "26.2",
+          "tray": [
+            {
+              "id": "0",
+              "tray_type": "PETG",
+              "tray_color": "Green"
+            },
+            {
+              "id": "1",
+              "tray_type": "PLA",
+              "tray_color": "White"
+            }
+          ]
+        },
+        {
+          "id": "1",
+          "humidity": "52.1",
+          "temp": "24.8",
+          "tray": [
+            {
+              "id": "0",
+              "tray_type": "ABS",
+              "tray_color": "Black"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

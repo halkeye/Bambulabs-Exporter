@@ -5,3 +5,7 @@ vendor/
 .env-empty
 # Added by goreleaser init:
 dist/
+coverage.html
+coverage.out
+*.pem
+bambulabs-exporter
