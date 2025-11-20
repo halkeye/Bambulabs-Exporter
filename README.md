@@ -104,6 +104,8 @@ go build -o ./bambulabs-exporter .
 | mc_remaining_time | Print Progress Remaining Time in minutes  | |
 | nozzle_target_temper |Nozzle Target Temperature Metric | |
 | nozzle_temper | Nozzle Temperature Metric | |
+| bed_target_temper | *Bed target temperature metric | |
+| bed_temper | *Bed temperature metric | |
 | print_error | Print Error reported by the Control board | |
 | wifi_signal | Wifi Signal Strength in dBm | |
 
