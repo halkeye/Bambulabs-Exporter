@@ -29,7 +29,7 @@ type Config struct {
 type Exporter struct {
 	config Config
 	client mqtt.Client
-	
+
 	// Metrics
 	amsHumidityMetric      *prometheus.GaugeVec
 	amsTempMetric          *prometheus.GaugeVec
@@ -51,6 +51,8 @@ type Exporter struct {
 	mcRemainingTimeMetric  prometheus.Gauge
 	nozzleTargetTemperMetric prometheus.Gauge
 	nozzleTemperMetric     prometheus.Gauge
+	bedTargetTemperMetric    prometheus.Gauge
+	bedTemperMetric    prometheus.Gauge
 }
 
 func NewExporter() *Exporter {
@@ -149,6 +151,14 @@ func (e *Exporter) initMetrics() {
 		Name: "nozzle_temper",
 		Help: "Nozzle Temperature Metric",
 	})
+	e.bedTargetTemperMetric = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "bed_target_temper",
+		Help: "Bed target temperature metric",
+	})
+	e.bedTemperMetric = promauto.NewGauge(prometheus.GaugeOpts{
+		Name: "bed_temper",
+		Help: "Bed temperature metric",
+	})
 }
 
 func (e *Exporter) ConnectToBroker() {
@@ -220,6 +230,8 @@ func (e *Exporter) messagePubHandler(client mqtt.Client, msg mqtt.Message) {
 	e.mcRemainingTimeMetric.Set(float64(data.Print.McRemainingTime))
 	e.nozzleTemperMetric.Set(float64(data.Print.NozzleTemper))
 	e.nozzleTargetTemperMetric.Set(float64(data.Print.NozzleTargetTemper))
+	e.bedTargetTemperMetric.Set(data.Print.BedTargetTemper)
+	e.bedTemperMetric.Set(data.Print.BedTemper)
 
 	for _, ams := range data.Print.Ams.Ams {
 		humidity, _ := strconv.ParseFloat(ams.Humidity, 64)
