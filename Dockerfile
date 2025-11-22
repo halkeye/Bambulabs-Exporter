@@ -13,4 +13,4 @@ COPY --from=build /bambulabs-exporter /bambulabs-exporter
 
 EXPOSE 9101
 
-CMD [ "/bambulabs-exporter" ]
+ENTRYPOINT [ "/bambulabs-exporter" ]
